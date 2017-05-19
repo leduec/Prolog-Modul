@@ -1,0 +1,45 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;_______Visualization File________;;;
+;;; Engine:    gldGame.pl			;;;
+;;; GDL:       montyhall.gdl		;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;Syntax;;;;;;;;;;
+; Engine_Code<-GDL_Code ;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#version
+;gdlVersion<-i
+gdlVersion<-ii
+
+#players
+player1<-candidate
+player2<-
+player3<-
+player4<-
+
+#positionsuitvalue
+cardPosition<-head(1)
+cardSuit<-
+cardValue<-head(0)
+
+#positions
+11001<-1
+12001<-2
+13001<-3
+
+#suits
+
+#values
+hidden<-closed
+a<-chosen
+q<-car
+
+#actions
+click(10000)<-noop
+click(11001)<-choose(1)
+click(12001)<-choose(2)
+click(13001)<-choose(3)
+click(10103)<-switch
+
+#end

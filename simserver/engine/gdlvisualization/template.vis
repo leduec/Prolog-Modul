@@ -1,0 +1,34 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;_______Visualization File________;;;
+;;; Engine:		gldGame.pl			;;;
+;;; GDL:		template.gdl		;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;Syntax;;;;;;;;;;
+; Engine_Code<-GDL_Code ;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#version
+;gdlVersion<-i
+;gdlVersion<-ii
+
+#players
+player1<-
+player2<-
+player3<-
+player4<-
+
+#positionsuitvalue
+cardPosition<-
+cardSuit<-
+cardValue<-
+
+#positions
+
+#suits
+
+#values
+
+#actions
+
+#end

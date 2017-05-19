@@ -1,0 +1,154 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; TicTacToeBlind
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Roles
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+role(x)
+role(o)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Initial State
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+init(cell(1,1,b))
+init(cell(1,2,b))
+init(cell(1,3,b))
+init(cell(2,1,b))
+init(cell(2,2,b))
+init(cell(2,3,b))
+init(cell(3,1,b))
+init(cell(3,2,b))
+init(cell(3,3,b))
+init(control(x))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Legality
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+legal(Player,mark(X,Y)) :-
+  true(control(Player)) &
+  true(cell(X,Y,Mark)) &
+  distinct(Mark,Player)
+
+legal(x,noop) :-
+  true(control(o))
+
+legal(o,noop) :-
+  true(control(x))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Update Rules
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+next(cell(X,Y,x)) :-
+  does(x,mark(X,Y)) &
+  true(cell(X,Y,b))
+
+next(cell(X,Y,o)) :-
+  does(o,mark(X,Y)) &
+  true(cell(X,Y,b))
+
+next(cell(X,Y,Mark)) :-
+  true(cell(X,Y,Mark)) &
+  distinct(Mark,b)
+
+next(cell(X,Y,b)) :-
+  does(Player,mark(A,B)) &
+  true(cell(X,Y,b)) &
+  distinct(X,A)
+
+next(cell(X,Y,b)) :-
+  does(W,mark(A,B)) &
+  true(cell(X,Y,b)) &
+  distinct(Y,B)
+
+next(control(x)) :-
+  true(control(o))
+
+next(control(o)) :-
+  true(control(x))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Percepts
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+sees(Player,marking(ok)) :-
+  does(Player,mark(X,Y)) &
+  true(cell(X,Y,b))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Supporting Concepts
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+line(Player) :-
+  role(Player) &
+  row(Player)
+line(Player) :-
+  role(Player) &
+  column(Player)
+line(Player) :-
+  role(Player) &
+  diagonal(Player)
+
+row(Player) :-
+  true(cell(X,1,Player)) &
+  true(cell(X,2,Player)) &
+  true(cell(X,3,Player))
+
+column(Player) :-
+  true(cell(1,Y,Player)) &
+  true(cell(2,Y,Player)) &
+  true(cell(3,Y,Player))
+
+diagonal(Player) :-
+  true(cell(1,1,Player)) &
+  true(cell(2,2,Player)) &
+  true(cell(3,3,Player)) 
+
+diagonal(Player) :-
+  true(cell(1,3,Player)) &
+  true(cell(2,2,Player)) &
+  true(cell(3,1,Player))
+
+open :-
+  true(cell(X,Y,b))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Termination
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+terminal :-
+  line(Player)
+terminal :-
+  ~open
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Goals
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+goal(Player,100) :-
+  line(Player)
+
+goal(Player,50) :-
+  ~line(Player) &
+  ~line(Opponent) &
+  role(Opponent) &
+  distinct(Player,Opponent)
+
+goal(Player,0) :-
+  ~line(Player)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Sees XML
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+sees_xml(Player,cell(X,Y,Player)) :-
+  true(cell(X,Y,Player))
+
+sees_xml(Player,cell(X,Y,b)) :-
+  true(cell(X,Y,NotPlayer)) &
+  distinct(Player,NotPlayer)

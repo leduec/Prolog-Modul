@@ -1,0 +1,56 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;_______Visualization File________;;;
+;;; Engine:    gldGame.pl      		;;;
+;;; GDL:       oneCard.gdl          ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;Syntax;;;;;;;;;;
+; Engine_Code<-GDL_Code ;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+#version
+;gdlVersion<-i
+gdlVersion<-ii
+
+#players
+player1<-white
+player2<-black
+player3<-
+player4<-
+
+#positionsuitvalue
+cardPosition<-card(1)
+cardSuit<-
+cardValue<-card(2)
+
+#positions
+10501<-whiteCard
+10515<-blackCard
+10209<-talonCard1
+10108<-talonCard2
+10808<-trickCard1
+11208<-trickCard2
+
+#suits
+
+#values
+hidden<-0
+a<-1
+2<-2
+3<-3
+4<-4
+5<-5
+6<-6
+7<-7
+8<-8
+9<-9
+t<-10
+
+#actions
+click(10000)<-noop
+click(10501)<-play(whiteCard)
+click(10515)<-play(blackCard)
+click(10209)<-play(talonCard1)
+click(10108)<-play(talonCard2)
+
+#end
